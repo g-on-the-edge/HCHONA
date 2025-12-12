@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome to Your Stay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, -system-ui, sans-serif;
+    }
+    body {
+      background: #0f172a;
+      color: #e5e7eb;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .page {
+      max-width: 900px;
+      width: 100%;
+      margin: 24px;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .hero {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("house.jpg");
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.68);
+      transform: scale(1.03);
+    }
+    .hero-overlay {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      padding: 32px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(to top, rgba(15,23,42,0.88), transparent 60%);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #e5e7eb;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      backdrop-filter: blur(12px);
+    }
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+    h1 {
+      font-size: 32px;
+      margin-top: 14px;
+      margin-bottom: 4px;
+      letter-spacing: -0.03em;
+    }
+    .subheading {
+      font-size: 15px;
+      color: #cbd5f5;
+      max-width: 420px;
+    }
+    .content {
+      padding: 24px 32px 30px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr);
+      gap: 24px;
+    }
+    @media (max-width: 768px) {
+      .content {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 20px 18px 24px 18px;
+      }
+      .hero-overlay {
+        padding: 24px 20px;
+      }
+      h1 {
+        font-size: 26px;
+      }
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: 18px;
+      padding: 16px 18px 18px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
+    }
+    .card + .card {
+      margin-top: 12px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #a5b4fc;
+    }
+    .pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(30, 64, 175, 0.8);
+      color: #e5e7eb;
+    }
+    .body-text {
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+    .muted {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+    .list {
+      list-style: none;
+      margin-top: 6px;
+    }
+    .list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 6px;
+      font-size: 14px;
+    }
+    .list-bullet {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-top: 7px;
+      background: linear-gradient(to bottom right, #38bdf8, #6366f1);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+    }
+    code {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+    .wifi-grid {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      column-gap: 8px;
+      row-gap: 4px;
+      margin-top: 6px;
+    }
+    .wifi-label {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+    .wifi-value {
+      font-size: 13px;
+    }
+    .highlight-box {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.15), rgba(15,23,42,0.95));
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+    .qr-card {
+      text-align: center;
+    }
+    .qr-title {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+    .qr-main {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .qr-box {
+      margin: 0 auto 10px;
+      width: 180px;
+      height: 180px;
+      border-radius: 24px;
+      background: radial-gradient(circle at top, rgba(56,189,248,0.3), rgba(15,23,42,0.96));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.9);
+    }
+    .qr-box img {
+      width: 150px;
+      height: 150px;
+      border-radius: 18px;
+      background: white;
+      padding: 10px;
+    }
+    .qr-caption {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+    .help-box {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(75, 85, 99, 0.8);
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+    .help-box strong {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-overlay">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          <span>Welcome to your stay</span>
+        </div>
+        <h1>Your La&nbsp;Crosse Getaway</h1>
+        <p class="subheading">A quick guide with everything you need for Wi‑Fi, entry, checkout, and getting help during your stay.</p>
+      </div>
+    </section>
+
+    <section class="content">
+      <div>
+        <article class="card">
+          <div class="card-header">
+            <div class="card-title">Wi‑Fi</div>
+            <div class="pill">Connected in seconds</div>
+          </div>
+          <p class="body-text">Make yourself at home and hop on the Wi‑Fi:</p>
+          <div class="wifi-grid">
+            <div class="wifi-label">Network (SSID)</div>
+            <div class="wifi-value"><code>SpectrumSetup-43</code></div>
+            <div class="wifi-label">Password</div>
+            <div class="wifi-value"><code>classyboat646</code></div>
+          </div>
+          <div class="highlight-box">If you have any trouble connecting, try forgetting the network and reconnecting, or power‑cycling your device’s Wi‑Fi.</div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-title">Front Door &amp; Smart Lock</div>
+            <div class="pill">Easy entry</div>
+          </div>
+          <ul class="list">
+            <li>
+              <span class="list-bullet"></span>
+              <span>To <strong>unlock</strong>: enter your 4‑digit code on the keypad, then press the <strong>checkmark</strong> button.</span>
+            </li>
+            <li>
+              <span class="list-bullet"></span>
+              <span>To <strong>lock</strong> when you leave: press and hold the <strong>checkmark (#)</strong> button on the keypad until you hear it engage.</span>
+            </li>
+          </ul>
+          <p class="muted" style="margin-top: 6px;">Please make sure the door is fully closed before locking.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-title">Before You Check Out</div>
+            <div class="pill">Quick reset</div>
+          </div>
+          <p class="body-text">When you’re ready to check out, a few quick things help us turn the home over smoothly for the next guest:</p>
+          <ul class="list">
+            <li>
+              <span class="list-bullet"></span>
+              <span><strong>Towels:</strong> please leave all used towels in the <strong>upstairs bathroom</strong>.</span>
+            </li>
+            <li>
+              <span class="list-bullet"></span>
+              <span><strong>Bedding:</strong> please pull back the comforter on any bed that was used so we know which sheets to replace.</span>
+            </li>
+            <li>
+              <span class="list-bullet"></span>
+              <span><strong>Trash:</strong> empty all garbage cans and place the tied bags in the garbage cans in the <strong>garage</strong>.</span>
+            </li>
+            <li>
+              <span class="list-bullet"></span>
+              <span><strong>Dishes:</strong> place any dirty dishes in the <strong>dishwasher</strong> and start a cycle if you’re able.</span>
+            </li>
+          </ul>
+          <p class="muted" style="margin-top: 6px;">No need to deep clean — just these quick resets are perfect.</p>
+        </article>
+      </div>
+
+      <div>
+        <article class="card qr-card">
+          <div class="qr-title">This page</div>
+          <div class="qr-main">Scan for your guide</div>
+          <div class="qr-box">
+            <img src="qr-code.png" alt="QR code for this guest guide" />
+          </div>
+          <p class="qr-caption">Point your camera at the code to reopen this guide anytime during your stay.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-title">Need Help?</div>
+          </div>
+          <div class="help-box">
+            If you need anything at all during your stay — help with the lock, Wi‑Fi, or questions about the house — please call your host at<br /><br />
+            <strong>[Add your phone number here]</strong>
+          </div>
+          <p class="muted" style="margin-top: 10px;">Text or call is totally fine. We want your stay to be smooth and relaxing.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
